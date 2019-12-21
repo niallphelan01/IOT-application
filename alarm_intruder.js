@@ -27,6 +27,29 @@ blynk.on('connect', function() {
     console.log("Blynk ready.");
     blynk.syncAll();
   });
+
+//pi camera initial settings
+const PiCamera = require('pi-camera');
+//https://www.npmjs.com/package/pi-camera
+
+//code for S3
+
+var s3 = require('s3');
+
+var client = s3.createClient({
+  maxAsyncS3: 20,     // this is the default
+  s3RetryCount: 3,    // this is the default
+  s3RetryDelay: 1000, // this is the default
+  multipartUploadThreshold: 20971520, // this is the default (20 MB)
+  multipartUploadSize: 15728640, // this is the default (15 MB)
+  s3Options: {
+    accessKeyId: jsonData.s3AccessKeyId,
+    secretAccessKey: jsonData.secretAccessKey,
+    // any other options are passed to new AWS.S3()
+    // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
+  },
+});
+
 setInterval(interval_sensor, 60000); // time interval (ms) to retrive the bme280 sensor information and send to Wia/Blynk
 //the funtion for sending the information retrieved from the bme280 sensors
 function interval_sensor() 
@@ -104,7 +127,7 @@ v1.on('write', function(param)
                name: 'door_contact_1',
                data: valueDrContact1 
           });
-          getAlarmStatus(); //get the alarm status by checking the state of the relay on/off
+          setAlarmStatus(); //get the alarm status by checking the state of the relay on/off
   });
   
   //tamper 1 
@@ -127,7 +150,7 @@ v1.on('write', function(param)
     name: 'tamper_door_1',
     data: valueDrTamper1 
     });
-    getAlarmStatus(); //get the alarm status by checking the state of the relay on/off and publish
+    setAlarmStatus(); //get the alarm status by checking the state of the relay on/off and publish
   });
   
   //tamper 2
@@ -151,7 +174,7 @@ v1.on('write', function(param)
     name: 'tamper_door_2',
     data: valueDrTamper2 
     });
-    getAlarmStatus();//get the alarm status by checking the state of the relay on/off and publish
+    setAlarmStatus();//get the alarm status by checking the state of the relay on/off and publish
   });
   
   //Door Contact 2
@@ -175,7 +198,7 @@ v1.on('write', function(param)
     name: 'door_contact_2',
     data: valueDrContact2
     });
-    getAlarmStatus();//get the alarm status by checking the state of the relay on/off and publish
+    setAlarmStatus();//get the alarm status by checking the state of the relay on/off and publish
   });
   
   //Pir sensor (motion)
@@ -192,14 +215,18 @@ v1.on('write', function(param)
      else
          {
           pirValue = 'motion'
-          relay.writeSync(value); //turn Relay on when this condition is met but it can only be turned off by the virtual button
+          relaystatus = relay.readSync();
+          if (relaystatus == 1) {  //double check to see if the relay has already been  set as we dont want continual videos for motion
+              relay.writeSync(value); //turn Relay on when this condition is met but it can only be turned off by the virtual button
+             setAlarmStatus();//get the alarm status by checking the state of the relay on/off and publish
+           }
          }
           console.log("Pir:" , pirValue)  
     wia.events.publish({
     name: 'pir',
     data: pirValue
     });
-    getAlarmStatus();//get the alarm status by checking the state of the relay on/off and publish
+    
   });
   
     }
@@ -227,11 +254,17 @@ v1.on('write', function(param)
   }
   });
 
-  function getAlarmStatus(){
+  function setAlarmStatus(){
     relaystatus = relay.readSync();
     if (relaystatus == 0){
           alarmStatus = 'alarm'
-          v2.write(255);} //display alarm status to blynk
+          v2.write(255);
+          takePhoto(); 
+          
+}
+ //display alarm status to blynk
+    
+    
     else
           {  
           alarmStatus = 'normal';
@@ -241,3 +274,106 @@ v1.on('write', function(param)
     data: alarmStatus
     });
   }
+
+  function takePhoto(){
+
+    let current_datetime = new Date();
+    var formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear() + "-" + current_datetime.getDate() + "__" + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
+    
+      const myCameraPhoto = new PiCamera({
+        mode: 'photo',
+        output: `${ __dirname }/${formatted_date}.jpg`,
+        width: 640,
+        height: 480,
+        nopreview: true,
+      });
+       
+        myCameraPhoto.snap()
+        .then((result) => {
+            // Your picture was captured
+           console.log("photo captured")
+           console.log(`And would be sent to https://iotbucketniallphelan.s3-eu-west-1.amazonaws.com/${formatted_date}.jpg`)
+           var params = {
+            localFile: `${ __dirname }/${formatted_date}.jpg`,
+           
+            s3Params: {
+              Bucket: "iotbucketniallphelan",
+              Key: `${formatted_date}.jpg`,
+              ACL:'public-read'
+              // other options supported by putObject, except Body and ContentLength.
+              // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+            },
+          };
+          var uploader = client.uploadFile(params);
+          //var uploader = client.uploadFile(params);
+          uploader.on('error', function(err) {
+            console.error("unable to upload:", err.stack);
+          });
+          uploader.on('progress', function() {
+            console.log("progress", uploader.progressMd5Amount,
+                      uploader.progressAmount, uploader.progressTotal);
+          });
+          uploader.on('end', function() {
+            console.log("done uploading");
+          });
+          takevideo();
+          wia.events.publish({
+            name: 'intruder_image',
+            data: `https://iotbucketniallphelan.s3-eu-west-1.amazonaws.com/${formatted_date}.jpg`
+            })
+           })
+           
+          .catch((error) => {
+             // Handle your error
+          });
+    
+}
+function takevideo(){
+    let current_datetime = new Date();
+    var formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear() + "-" + current_datetime.getDate() + "__" + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
+    const myCamera = new PiCamera({
+        mode: 'video',
+        output: `${ __dirname }/${formatted_date}.h264`,
+        width: 1920,
+        height: 1080,
+        timeout: 3000, // Record for 5 seconds
+        nopreview: true,
+      });
+     myCamera.record()
+       .then((result) => {
+          
+       // Your video was captured
+       console.log("video captured")
+       console.log(`And would be sent to https://iotbucketniallphelan.s3-eu-west-1.amazonaws.com/${formatted_date}.H264`)
+       var params = {
+        localFile: `${ __dirname }/${formatted_date}.h264`,
+       
+        s3Params: {
+          Bucket: "iotbucketniallphelan",
+          Key: `${formatted_date}.H264`,
+          ACL:'public-read'
+          // other options supported by putObject, except Body and ContentLength.
+          // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+        },
+      };
+      var uploader = client.uploadFile(params);
+      //var uploader = client.uploadFile(params);
+      uploader.on('error', function(err) {
+        console.error("unable to upload:", err.stack);
+      });
+      uploader.on('progress', function() {
+        console.log("progress", uploader.progressMd5Amount,
+                  uploader.progressAmount, uploader.progressTotal);
+      });
+      uploader.on('end', function() {
+        console.log("done uploading");
+      });
+      wia.events.publish({
+        name: 'video',
+        data: `https://iotbucketniallphelan.s3-eu-west-1.amazonaws.com/${formatted_date}.H264`
+        })
+       })
+       .catch((error) => {
+       // Handle your error
+       });
+}

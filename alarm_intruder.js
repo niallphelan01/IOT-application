@@ -42,41 +42,13 @@ setInterval(interval_sensor, 60000); // time interval (ms) to retrive the bme280
 //the funtion for sending the information retrieved from the bme280 sensors
 function interval_sensor() 
 { 
-    const names = ['temperature','humidity', 'pressure'];
     bme280.open().then(async sensor => 
         {
            console.log(await sensor.read());
            var reading = await sensor.read(); 
-        v0.on('read',function()
-        { 
-           v0.write(reading.temperature)
-        });
-        for(var i = 0; i < 3;i++){ //for loop to publish the temperature/humidity and pressure
-            console.log(names[i]);
-            console.log(`reading.${names[i]}`);
-            wia.event.publish(
-                {
-                    name: `${names[i]}`,
-                    data: `reading.${names[i]}`
-                })
-           
-        }
-        /*
-        wia.events.publish(
-        {
-             name: 'temperature',
-             data: reading.temperature
-        });
-        wia.events.publish(
-        {
-             name: 'humidity',
-             data: reading.humidity
-        });
-        wia.events.publish({
-             name: 'pressure',
-             data: reading.pressure
-        });
-        */
+       
+        publish_enviro(reading); //call the publishing of the bme Sensors to Wia and Blynk
+        
         await sensor.close();
         })
         .catch(console.log);
@@ -85,3 +57,26 @@ function interval_sensor()
 const sleep = (milliseconds) => {
         return new Promise(resolve => setTimeout(resolve, milliseconds))
       }
+
+function publish_enviro(reading) //function to publish the bmesensor results
+     {
+        v0.on('read',function()
+        { 
+           v0.write(reading.temperature)
+        });
+        wia.events.publish(
+        {
+           name: 'temperature',
+            data: reading.temperature
+        });
+        wia.events.publish(
+        {
+            name: 'humidity',
+            data: reading.humidity
+         });
+        wia.events.publish(
+        {             
+            name: 'pressure',
+            data: reading.pressure
+        });
+     }

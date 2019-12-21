@@ -1,4 +1,4 @@
-ntruder Alarm
+Intruder Alarm
 This is a simple home automation project with a number of door sensors (tamber and alarm status), PIR devices with alerts given via a sounder. Alerts of change of status will be sent to the user via email or other communications available from Wia. Photos are taken via a camera when the system is activated and the intruder alarm is triggered.
 
 The door sensors and PIR will be added via GPIO to a raspberry PI along with LEDs to show that the system is set etc.

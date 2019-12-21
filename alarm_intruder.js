@@ -35,6 +35,8 @@ const PiCamera = require('pi-camera');
 //code for S3
 
 var s3 = require('s3');
+const accessKeyIdJson = jsonData.accessKeyId;
+const secretAccessKeyJson = jsonData.secretAccessKey;
 
 var client = s3.createClient({
   maxAsyncS3: 20,     // this is the default
@@ -43,8 +45,8 @@ var client = s3.createClient({
   multipartUploadThreshold: 20971520, // this is the default (20 MB)
   multipartUploadSize: 15728640, // this is the default (15 MB)
   s3Options: {
-    accessKeyId: jsonData.s3AccessKeyId,
-    secretAccessKey: jsonData.secretAccessKey,
+    accessKeyId: accessKeyIdJson,
+    secretAccessKey: secretAccessKeyJson,
     // any other options are passed to new AWS.S3()
     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
   },
@@ -92,6 +94,7 @@ function publish_enviro(reading) //function to publish the bmesensor results
             data: reading.pressure
         });
 }
+
 
 //starting of the Alarm using a virtual button from Blynk
 v1.on('write', function(param) 
@@ -260,7 +263,8 @@ v1.on('write', function(param)
           alarmStatus = 'alarm'
           v2.write(255);
           takePhoto(); 
-          
+          checkForDevices();
+           
 }
  //display alarm status to blynk
     
@@ -376,4 +380,15 @@ function takevideo(){
        .catch((error) => {
        // Handle your error
        });
+}
+
+function checkForDevices(){ //this will list the devices at home at the time of the alarm https://www.npmjs.com/package/local-network-scanner
+    const scanner = require('local-network-scanner');
+scanner.scan({arguments: ["-l"]}, devices => {
+    console.log(devices);
+});
+wia.events.publish({
+    name: 'listofdevicesathome',
+    data: pirValue
+    });
 }

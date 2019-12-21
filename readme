@@ -1,0 +1,18 @@
+ntruder Alarm
+This is a simple home automation project with a number of door sensors (tamber and alarm status), PIR devices with alerts given via a sounder. Alerts of change of status will be sent to the user via email or other communications available from Wia. Photos are taken via a camera when the system is activated and the intruder alarm is triggered.
+
+The door sensors and PIR will be added via GPIO to a raspberry PI along with LEDs to show that the system is set etc.
+
+The setting of the Intruder alarm will be completed via a web app as I intend on using node.js for this project.
+
+The intruder system will have LEDs for the status of the system (GPIO) 
+
+From a data perspective I intend using Wia.io as MQTT broker.
+
+Automation
+For lighting in the shed I would use a 5V/240V relay to trigger a light via a web app. I may even use a wireless light for this. As I have a 4 relay board I might time permitting add other functionality to the system such as some kind of heater if the temperature drops too much.
+
+Temperature measurement in the shed will be taken via GY-BME280 device. Alerts will be sent if the temperature/humdity go under a certain range so as any sensitive equipment in the shed can be removed.
+
+I will be logging all the data from the Intruder Alarm and Automation in a database for further interrigation
+

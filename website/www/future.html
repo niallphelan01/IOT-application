@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IAS2020 the- IOT intruder alarm</title>
+    <link rel="stylesheet" href="./css/home.css">
+  </head>
+  <body>
+    <section class="container">
+      <header id="header">
+  <a href="index.html"><img src="images/ias2020_1.jpg" alt="ias2020" class="medium-centre-img"> </a>
+</header>
+      <nav id="navigation">
+    <ul id="menu">
+    	<li id="home"><a href="index.html">Home</a></li>
+        <li id="flowchart"><a href="flowchart.html">Process</a></li>
+        <li id="Program"><a href="program.html">Program</a></li>
+        <li id="wia"><a href="wia.html">Using Wia</a></li>
+        <li id="blynk"><a href="blynk.html">Blynk</a></li>
+        <li id="media"><a href="media.html">Media</a></li>
+        <li id="future"><a href="future.html">Future Dev</a></li>
+        <li id="contact"><a href="contact_us.html">Contact us</a></li>
+        
+    </ul>
+</nav>
+<script>
+  document.querySelector("#future").classList.add("active")
+</script>
+<main id="maincontent">
+  <article id="primary">
+    <section>
+      <h2>Future developments</h2>
+      
+      <p>Future developments in Intruder Alarm could be in the following areas</p>
+      
+      <h3>Programming of channels</h3>
+      <p>
+      Rather than hardcoding in devices into particular tasks, we could default the system to have a number of channels. 
+      These channels could be configured to be a door sensor, tamper or PIR via a json file called by the main program. 
+      As part of the json file then interface could be selected and the GPIO pins. Also an option for selecting live or unused would be useful.
+      This in the end would allow for the adjustment of just one json file inorder to setup this system for other setups much more like mainstream systems.
+      </p>
+      <h3>Web interface</h3>
+      <p>
+      A web interface for setting the alarm, getting back information would be a great solution for such an application. This is something that would be a nice edition. 
+      </p>
+      <h3>Additional devices</h3>
+      <p>
+      A heater could be added to the setup for the shed in order to keep the temperature from freezing on more sensitive equipment
+      </p>
+    <h3>Network scan</h3>
+      <p>
+     I have implemented a very simple network scan (arp-scan) in this application to see what devices are at home when the intruder alarm is activated. This could be expanded further maybe to see if certain phones are home then to ping them with an alert (email, text ,etc.)
+     
+      </p> 
+      <h3>Clearing of old photos and videos - Service dashboard</h3>
+      <p>
+    It will be important to have some web interface in order to delete S3 stored data. A web application could request deletion in the node.js application from the s3 bucket.
+      </p> 
+      
+       <h3>securing S3 bucket</h3>
+      <p>
+    For now the S3 bucket is public, this is only temporary until a method for securing this is achieved. 
+      </p> 
+      
+      <h3>database</h3>
+      <p>
+    Move the database to a dedicated database server. Probably AWS EC2 instance with node.js and mysql installed on same. 
+      </p> 
+    
+      
+    </section>
+    
+  </article>
+  <aside id="secondary">
+  <p class="highlight">
+   <img src="images/blynk.jpg" alt="Blynk" class="small-centre-img">
+   Simple IOT platform
+  </p>
+  <p class="highlight">
+    <img src="images/wia.jpg" alt="Wia IOT platform" class="small-centre-img">
+    Wia IOT platform
+  </p>
+  <p class="highlight">
+    <img src="images/raspberry.jpg" alt="The raspberry pi" class="small-centre-img">
+    Raspberry Pi
+  </p>
+  <p class="highlight">
+    <img src="images/node.jpg" alt="Node.js" class="small-centre-img">
+    Node.js
+  </p>
+  <p class="highlight">
+    <img src="images/npm.jpg" alt="NPM" class="small-centre-img">
+    NPM
+  </p>
+</aside>
+</main>
+      <footer id="footer">
+  <p> 
+    Contact us at : ouremailaddress.com or visit  <a href="contact_us.html"> Contact us </a>
+  </p>
+</footer>
+    </section>
+  </body>
+</html>

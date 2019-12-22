@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IAS2020 the- IOT intruder alarm</title>
+    <link rel="stylesheet" href="./css/home.css">
+  </head>
+  <body>
+    <section class="container">
+      <header id="header">
+  <a href="index.html"><img src="images/ias2020_1.jpg" alt="ias2020" class="medium-centre-img"> </a>
+</header>
+      <nav id="navigation">
+    <ul id="menu">
+    	<li id="home"><a href="index.html">Home</a></li>
+        <li id="flowchart"><a href="flowchart.html">Process</a></li>
+        <li id="Program"><a href="program.html">Program</a></li>
+        <li id="wia"><a href="wia.html">Using Wia</a></li>
+        <li id="blynk"><a href="blynk.html">Blynk</a></li>
+        <li id="media"><a href="media.html">Media</a></li>
+        <li id="future"><a href="future.html">Future Dev</a></li>
+        <li id="contact"><a href="contact_us.html">Contact us</a></li>
+        
+    </ul>
+</nav>
+<script>
+  document.querySelector("#Program").classList.add("active")
+</script>
+<main id="maincontent">
+  <article id="primary">
+    <h2>Development</h2>
+    <p>
+     Development of the Intruder alarm application on the Raspberry pi was completed using node.js
+    </p>
+     <p>Initially I found this to be difficult to find example coding and syntax from the web but as I've gone through the programming of the device and application, I have found may resources and 
+     most of the NPM information does hold examples. Mainly it was a case of knowing where to look.
+    <section>
+    <h3>Asynchronous </h3>
+    <p>Using the async nature of node it was useful in programming the i/o elements of the setup. The BME280 sensor uses the I2C interface on the raspberry pi. 
+    And with a single thread operation it was possible to request the data from this every 60 seconds and whilst waiting for this result the program could go off completing other tasks.
+    </p>
+    <img src="images/i2c.jpg" alt="i2C read call" class="large-centre-img">
+</section>
+
+<section>
+<h2> GPIO</h2>
+  <p>Most of the devices in this application were realised using the GPIO pins on the raspberry pi. The NPM resource used for this was ONOFF available from:
+  <a href="https://www.npmjs.com/package/onoff">ONOFF</a> </p>
+</section>
+
+<section>
+<h2>s3 storage</h2>
+<p>Storage of the images and videos is into a S3 bucket from Amazon Web Services. This was setup and the files are sent directly from the raspberrypi node.js application rather than using Wia </p>
+
+<p> The NPM package for the S3 integration used is available from: <a href="https://www.npmjs.com/package/s3">S3</a> </p>
+
+</section>
+
+
+<section>
+<h2>settings in a json file</h2>
+<p>As its important not to share keys for various platforms including AWS, Blynk and Wia. I placed these in a json file outside of my git repository. See an example of the json file</p>
+<img src="images/settings_json.jpg" alt="json file" class="large-centre-img">
+
+<p>The coding then to access these values in the node.js file are the following:
+<img src="images/json_import.jpg" alt="json import" class="large-centre-img">
+</p>
+</section>
+
+<section>
+<h2>arp scanner</h2>
+<p>For this I used a NPM package called local network scanner <a href="https://www.npmjs.com/package/local-network-scanner">available from</a> </p>
+<img src="images/network_scanner.jpg" alt="json file" class="large-centre-img">
+<p>The results are passed back to wia via MQTT and then into the mySQL database for storage.</p>
+<p>This would be an area for further development to work with this data</p>
+</section>
+
+<section>
+<h2> mySQL</h2>
+  <p>Storing the information from the program e.g. alarm status, image location etc was realised using a MQTT subscriber from my laptop and then a connection was made to a SQL database and the data was sorted into the required tables.
+  A node.js application was ran to achieve this with a subscription to wia.</p>
+  
+  <img src="images/wia_subscribe.jpg" alt="wia_subscription for mysql" class="large-centre-img">
+  
+  <p>The workflow for getting the data to the mySQL server is below
+  
+  <img src="images/database.jpg" alt="wia_subscription for mysql to database" class="large-centre-img">
+  
+  </p></section>
+
+The package used in node.js for mySQL: <a href="https://www.npmjs.com/package/mysql">mySQL NPM</a> </p>
+<section>
+<h3>Full listing of code</h3>
+<p>
+For a full listing of the code for the Intruder alarm, please go to my git hub page: <a href="https://github.com/niallphelan01/IOT-application.git">IOT application</a> 
+</p>
+
+</section>
+
+  </article>
+  <aside id="secondary">
+  <p class="highlight">
+   <img src="images/blynk.jpg" alt="Blynk" class="small-centre-img">
+   Simple IOT platform
+  </p>
+  <p class="highlight">
+    <img src="images/wia.jpg" alt="Wia IOT platform" class="small-centre-img">
+    Wia IOT platform
+  </p>
+  <p class="highlight">
+    <img src="images/raspberry.jpg" alt="The raspberry pi" class="small-centre-img">
+    Raspberry Pi
+  </p>
+  <p class="highlight">
+    <img src="images/node.jpg" alt="Node.js" class="small-centre-img">
+    Node.js
+  </p>
+  <p class="highlight">
+    <img src="images/npm.jpg" alt="NPM" class="small-centre-img">
+    NPM
+  </p>
+</aside>
+<main></main></main>
+      <footer id="footer">
+  <p> 
+    Contact us at : ouremailaddress.com or visit  <a href="contact_us.html"> Contact us </a>
+  </p>
+</footer>
+    </section>
+  </body>
+</html>

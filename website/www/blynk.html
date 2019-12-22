@@ -24,30 +24,42 @@
     </ul>
 </nav>
 <script>
-  document.querySelector("#flowchart").classList.add("active")
+  document.querySelector("#blynk").classList.add("active")
 </script>
 <main id="maincontent">
   <article id="primary">
     <section>
-      <h2>Flowchart of the system running</h2>
-       <p>
-       
+      <h1>Blynk</h1>
+      <p>
+        The Blynk IOT application was used in the case of this Intruder alarm system to display relevant simple information to the end user. Also using this app the user can set the alarm.
+         
+         <img src="images/blynk_screen.jpg" alt="Wia widgets" class="medium-centre-img">
        </p>
-       <a href="files/flowchart.pdf" target="pdf-frame"><img src="images/flowchart.jpg" alt="Flowchart with link" class="medium-left-img"></a>
       
-      <section>
-      <h3> Main parts of the flow</h3>
-      <ul id="features">
-       <li>The alarm system is started via a virtual button from Blynk</li>
-       <li>The alarm takes 5 seconds to set, leaving the user leave the shed</li>
-       <li>Once the alarm is set the status is updated to Wia and Blynk via MQTT</li>
-       <li>Once the alarm is set I use the aysynchronous nature of node js to watch for a change in the status of the sensors (door, tamper and PIR)</li>
-       <li>If the alarm is triggered then the pi camera records image and video and this will be emailed via a Wia event</li>
-      </ul>
-      </section>
-      
-
-   </section></article>
+    </section>
+    
+    <h2>Example video</h2>
+    <p>
+    See a video below showing the usage of the blynk application
+    </p>
+    <p>
+    
+        <video controls="controls" width="600" height="600" name="IAS2020">
+        <source src="videos/blynk_video.mov" type="video/mov">
+        </source><source src="videos/blynk_video.mp4" type="video/mp4">
+        <!-- Cannot specift percentagets only pixels
+          reference: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video
+          I've included two video sources in the <video> tag in order to allow for different browsers and operating systems.
+        -->
+        </source></video>
+      </p>
+      <p>
+        Should your browser not support HTML5 video, here is a 
+        <a href="videos/blynk_video.mp4" target="_blank">link to the video
+          </a>instead.
+          </p>
+   
+  </article>
   <aside id="secondary">
   <p class="highlight">
    <img src="images/blynk.jpg" alt="Blynk" class="small-centre-img">

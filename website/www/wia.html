@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IAS2020 the- IOT intruder alarm</title>
+    <link rel="stylesheet" href="./css/home.css">
+  </head>
+  <body>
+    <section class="container">
+      <header id="header">
+  <a href="index.html"><img src="images/ias2020_1.jpg" alt="ias2020" class="medium-centre-img"> </a>
+</header>
+      <nav id="navigation">
+    <ul id="menu">
+    	<li id="home"><a href="index.html">Home</a></li>
+        <li id="flowchart"><a href="flowchart.html">Process</a></li>
+        <li id="Program"><a href="program.html">Program</a></li>
+        <li id="wia"><a href="wia.html">Using Wia</a></li>
+        <li id="blynk"><a href="blynk.html">Blynk</a></li>
+        <li id="media"><a href="media.html">Media</a></li>
+        <li id="future"><a href="future.html">Future Dev</a></li>
+        <li id="contact"><a href="contact_us.html">Contact us</a></li>
+        
+    </ul>
+</nav>
+<script>
+  document.querySelector("#wia").classList.add("active")
+</script>
+<main id="maincontent">
+  <article id="primary">
+    <section>
+      <h1>Using Wia</h1>
+      <p>
+        The setup of wia was completed in multiple steps using this easy to use IOT platform
+       </p>
+    </section>
+    <section>
+      <h2>Device Setup</h2>
+      <p>
+      The device was setup after creating an account for to connection to the raspberry pi.
+      
+        <img src="images/things_wia.jpg" alt="Wia device setup" class="medium-centre-img">
+        
+      For more information on setting up a device go to: <a href="https://developers.wia.io/wia-cloud/add-a-device">Wia Add a device</a> 
+      </p>
+    </section>
+    <h2>Widgets</h2>
+      <p>
+        Widgets were then setup for the required fields.
+        
+        See a snapshot of the widgets setup for the intruder alarm giving information to the end user.
+        
+         <img src="images/widget_wia.jpg" alt="Wia widgets" class="medium-centre-img">
+        
+        see more information on <a href="https://developers.wia.io/wia-cloud/add-a-widget">Wia Add a widget</a> 
+      </p>
+      
+      <h3> Embedded widgets </h3>
+      <p>
+      See below some embedded <bf>live widgets </bf> from my Wia IOT application for the purpose of demonstration.
+      </p>
+      <p>Live information</p>
+      <p>
+      <iframe width="400" height="280" allowtransparency="true" scrolling="no" frameborder="no" src="https://widgets.wia.io/embed/wgt_5szdCPq0/dev_STZnJ6QW"></iframe>
+      </p>
+      <p>
+      <iframe width="400" height="280" allowtransparency="true" scrolling="no" frameborder="no" src="https://widgets.wia.io/embed/wgt_8un2OAPF/dev_STZnJ6QW"></iframe>
+       </p>
+      <p>
+      <iframe width="400" height="280" allowtransparency="true" scrolling="no" frameborder="no" src="https://widgets.wia.io/embed/wgt_XbaxwDEA/dev_STZnJ6QW"></iframe>
+    </p>
+    
+    
+    <section>
+    <h2>Flows</h2>
+     <p>
+     As part of my application, I used a number of flows in order to send out alerts to the end user of this application.
+      </p>
+      See more information on <a href="https://developers.wia.io/wia-cloud/build-a-flow">Wia Adding a flow</a> 
+           
+
+      <ul id="flows">
+       <li>If the alarm is triggered (event) then send an email to alert the userk</li>
+       <li>When a photo is uploaded (event) send an email with link</li>
+       <li>When a video is uploaded (event) send an email with link</li>
+       <li>If the temperature (event) in the shed is under 2oC, send an email to alert the user, or not</li>
+      </ul>
+      
+      
+      <h3> Flows - Alarm triggering an event</h3>
+      <p>
+      For this flow, the alarm status event was monitored to send an email, an important part of this was to check for the value
+      of 'alarm' as this event has a number of different status's so for this I setup a run function as in the image below, where it would exit in the case of not equal to
+      alarm.
+       <img src="images/alarm_flow_wia.jpg" alt="Wia alarm flow" class="large-centre-img">
+      </p>
+      
+      <h3> Flows - Temperature under 2oC</h3>
+      <p>
+      For this event the temperature event was monitored in order to ascertain whether it went under 2oC and alerts the user when the value is less than 2oC via email.
+      
+      
+       <img src="images/temp_wia.jpg" alt="Wia alarm flow" class="medium-centre-img">
+       For the Run function the following was inserted
+       <img src="images/temp_run_wia.jpg" alt="Wia alarm flow" class="large-centre-img">
+       
+      </p>
+      </section>
+    
+    <section>
+    <h3>Useful information</h3>
+    For more useful information on development with the wia IOT platform see <a href="https://developers.wia.io">Wia developer hub </a> 
+    
+    </section>
+  </article>
+
+  <aside id="secondary">
+  <p class="highlight">
+   <img src="images/blynk.jpg" alt="Blynk" class="small-centre-img">
+   Simple IOT platform
+  </p>
+  <p class="highlight">
+    <img src="images/wia.jpg" alt="Wia IOT platform" class="small-centre-img">
+    Wia IOT platform
+  </p>
+  <p class="highlight">
+    <img src="images/raspberry.jpg" alt="The raspberry pi" class="small-centre-img">
+    Raspberry Pi
+  </p>
+  <p class="highlight">
+    <img src="images/node.jpg" alt="Node.js" class="small-centre-img">
+    Node.js
+  </p>
+  <p class="highlight">
+    <img src="images/npm.jpg" alt="NPM" class="small-centre-img">
+    NPM
+  </p>
+</aside>
+</main>
+      <footer id="footer">
+  <p> 
+    Contact us at : ouremailaddress.com or visit  <a href="contact_us.html"> Contact us </a>
+  </p>
+</footer>
+    </section>
+  </body>
+</html>

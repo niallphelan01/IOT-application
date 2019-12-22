@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>iHealth Cardiomed</title>
+    <link rel="stylesheet" href="./css/home.css">
+  </head>
+  <body>
+    <section class="container">
+      <header id="header">
+  <a href="index.html"><img src="images/ias2020.jpg" alt="ias2020" class="small-centre-img"> </a>
+</header>
+      <nav id="navigation">
+    <ul id="menu">
+    	<li id="home"><a href="index.html">Home</a></li>
+        <li id="device"><a href="flowchart.html">flowchart</a></li>
+        <li id="software"><a href="software.html">Software</a></li>
+        <li id="clinical"><a href="clinval.html">Clinical Validation</a></li>
+        <li id="why"><a href="why.html">Blood Pressure</a></li>
+        <li id="contact"><a href="contact_us.html">Contact us</a></li>
+        <li id="media"><a href="media.html">Media</a></li>
+    </ul>
+</nav>
+
+<script>
+  document.querySelector("#flowchart").classList.add("active")
+</script>
+<main id="maincontent">
+  <article id="primary">
+    <section>
+      <h2>Flowchart of the system running</h2>
+       <p>
+       
+       </p>
+       <a href="files/flowchart.pdf" target="pdf-frame"><img src="images/flowchart.jpg" alt="Flowchart with link" class="medium-left-img"></a>
+      
+      <section>
+      <h3> Main parts of the flow</h3>
+      <ul id="features">
+       <li>The alarm system is started via a virtual button from Blynk</li>
+       <li>The alarm takes 5 seconds to set, leaving the user leave the shed</li>
+       <li>Once the alarm is set the status is updated to Wia and Blynk via MQTT</li>
+       <li>Once the alarm is set I use the aysynchronous nature of node js to watch for a change in the status of the sensors (door, tamper and PIR)</li>
+       <li>If the alarm is triggered then the pi camera records image and video and this will be emailed via a Wia event</li>
+      </ul>
+      </section>
+      
+
+   </section></article>
+  <aside id="secondary">
+  <p class="highlight">
+   <img src="images/blynk.jpg" alt="Blynk" class="small-centre-img">
+   Simple IOT platform
+  </p>
+  <p class="highlight">
+    <img src="images/wia.jpg" alt="Wia IOT platform" class="small-centre-img">
+    Wia IOT platform
+  </p>
+  <p class="highlight">
+    <img src="images/raspberry.jpg" alt="The raspberry pi" class="small-centre-img">
+    Raspberry Pi
+  </p>
+  <p class="highlight">
+    <img src="images/node.jpg" alt="Node.js" class="small-centre-img">
+    Node.js
+  </p>
+</aside>
+</main>
+      <footer id="footer">
+  <p> 
+    Contact us at : ouremailaddress.com or visit  <a href="contact_us.html"> Contact us </a>
+  </p>
+</footer>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+ul#menu li {
+  background: grey;
+  display: inline;
+color: white;
+   padding: .5em 2em .5em 2em;
+
+}
+
+ul#menu a {
+  text-decoration: none;
+  color:white;
+}
+
+#menu li.active a {
+  display: inline;
+  background: #FF530D;
+  padding: .5em 2em .5em 2em;
+  color: white;
+ 
+}
+ul#features li{
+ color: grey;
+ line-height: 3em;
+}
+ul#technical_information li{
+ color: #808080;
+ line-height: 2em;
+
+}
+

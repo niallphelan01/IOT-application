@@ -1,0 +1,57 @@
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 33.33%;
+  padding: 5px;
+  margin: 50px;
+}
+
+.small-centre-img {
+  display: block;
+  width: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.medium-centre-img {
+  display: block;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  float: middle;
+}
+.medium-left-img {
+  display: flex;
+  width:40%;
+  position: left;
+  border: 1em solid #ddd;
+  padding:4em;
+}
+
+
+.large-centre-img {
+  width: 80%;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+.mediumlrg-centre-img{
+  display: block;
+  width: 35%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#Clinical{
+  border-color: #808080;
+  border-style: dashed;
+  padding:5em;
+  width:25%;
+  height: 15%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+ 
+}

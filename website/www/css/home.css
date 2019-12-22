@@ -1,0 +1,65 @@
+@import url("grid.css");
+@import url("image.css");
+@import url("nav.css");
+
+body {
+  font-family: Helvetica Neue;
+  font-size: medium;
+  line-height: 1.6em;
+}
+a.link, a.hover, a.active, a.visited{
+  color:white;
+}
+h1, h2 {
+  color: #ff5200;
+  margin: 3%;
+}
+
+h1 {
+  font-size: 150%;
+}
+
+h2 {
+  font-size: 130%;
+}
+h3 {
+  color:#808080;
+  font-size: 110%;
+  margin: 4%;
+}
+
+p {
+  color: #808080;
+  margin-left: 5%;
+  line-height: 2em;
+}
+a.link, a.hover, a.active, a.visited{
+  color:white;
+}
+
+.special {
+  color: maroon;
+}
+
+.highlight {
+  color: #808080;
+  line-height: 1em;
+  text-align: center;
+}
+
+#regulatory_info{
+  color:grey;
+  font-size: 100%;
+  margin: 5%;
+  border: 1px solid #ddd;
+  font-style: italic;
+  padding:1em;
+}
+
+
+
+
+
+
+
+

@@ -22,21 +22,64 @@ wia.events.subscribe({
 }, function(event) {
   console.log(event.id + ": " + event.name + ": " + event.data + " " + " " + event.timestamp);
   console.log(event);
-  console.log(`INSERT INTO Enviro (timeEnviro, ${event.name}) VALUES ('${event.timestamp}', '${event.data}');`)
+  //console.log(`INSERT INTO Enviro (timeEnviro, ${event.name}) VALUES ('${event.timestamp}', '${event.data}');`)
   const eventName = event.name;
-  if ((eventName == "temperature") || (eventName == "pressure") || (eventName == "humidity"))
-  {
-  var sql = `INSERT INTO Enviro${event.name} (id, timeEnviro, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;
-  
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("1 record inserted");
-    });
-  };
-
-
+  var sql = `INSERT INTO ${event.name} (id, time${event.name}, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;
+  addToDb(sql);
+  /*if ((eventName == "temperature") || (eventName == "pressure") || (eventName == "humidity"))
+ {
+       var sql = `INSERT INTO Enviro${event.name} (id, timeEnviro, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`; 
+  addToDb(sql);
+    
+  }
+else if(eventName == "alarmset"){
+var sql = `INSERT INTO ${event.name} (id, time${event.name}, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;
+addToDb(sql);
+}
+else if(eventName == "door_contact_1"){
+  var sql = `INSERT INTO ${event.name} (id, time${event.name}, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;
+  addToDb(sql);
+  }
+else if(eventName == "door_contact_2"){
+  var sql = `INSERT INTO ${event.name} (id, time${event.name}, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;
+  addToDb(sql);
+  }
+else if(eventName == "tamper_door_1"){
+  var sql = `INSERT INTO ${event.name} (id, time${event.name}, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;
+  addToDb(sql);
+  }
+else if(eventName == "tamper_door_2"){
+  var sql = `INSERT INTO ${event.name} (id, time${event.name}, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;
+  addToDb(sql);
+  }
+  else if(eventName == "pir"){
+    var sql = `INSERT INTO ${event.name} (id, time${event.name}, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;
+    addToDb(sql);
+    }
+  else if(eventName == "alarm"){
+    var sql = `INSERT INTO ${event.name} (id, time${event.name}, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;=
+    addToDb(sql);
+    }
+  else if(eventName == "video_event"){
+    var sql = `INSERT INTO ${event.name} (id, time${event.name}, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;
+    console.log(sql);
+    addToDb(sql);
+    }
+  else if(eventName == "intruder_image"){
+    var sql = `INSERT INTO ${event.name} (id, time${event.name}, ${event.name}) VALUES ('${event.id}','${event.timestamp}', '${event.data}');`;
+    console.log(sql);
+    addToDb(sql);
+  }
+*/
 });
 
+function addToDb(sql){
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("1 record inserted");
+  });
+
+}
 // Connect to the MQTT API
 wia.stream.connect();
 

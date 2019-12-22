@@ -21,12 +21,14 @@ var blynk = new Blynk.Blynk(AUTH);
 var v0 = new blynk.VirtualPin(0); //temperature
 var v1 = new blynk.VirtualPin(1); //main button to turn on the Alarm
 var v2 = new blynk.VirtualPin(2); //alarm status
-var v3 = new blynk.VirtualPin(3); //video url (to be added)
+var v3 = new blynk.WidgetLCD(3); //alarm setting status Set/Unset
+
 //Blynk connection
 blynk.on('connect', function() {
     console.log("Blynk ready.");
     blynk.syncAll();
   });
+v3.clear() //Clear the LCD
 
 //pi camera initial settings
 const PiCamera = require('pi-camera');
@@ -102,6 +104,7 @@ v1.on('write', function(param)
       if (param[0]==1)
       {
           console.log('Alarm Arming');
+          v3.print(0,0,"Alarm Arming");//prints the alarm set status to the blynk app
           sleep(5000).then(() => 
           {
           //Give the user 5 seconds to exit the shed etc 
@@ -111,6 +114,7 @@ v1.on('write', function(param)
                       data: 'Set'
                   });
               console.log('Alarm Set');
+              v3.print(0,0,'Alarm set     ');//prints the alarm set status to the blynk app
           //Door Contact 1
           drContact1.watch(function (err, value) 
           { //Watch for hardware interrupts on pushButt$
@@ -249,6 +253,7 @@ v1.on('write', function(param)
     drContact2.unwatch(); //unwatch the door 2 contact
     relay.writeSync(1); //turn the relay off 
     alarmStatus = 'reset' //reset of the alarm status
+    v3.print(0,0,"Alarm unset   ");//prints the alarm set status to the blynk app
     v2.write(0); //display alarm status to blynk
     wia.events.publish({
     name: 'alarm',
@@ -386,9 +391,10 @@ function checkForDevices(){ //this will list the devices at home at the time of 
     const scanner = require('local-network-scanner');
 scanner.scan({arguments: ["-l"]}, devices => {
     console.log(devices);
+    wia.events.publish({
+        name: 'listofdevicesathome',
+        data: devices
+        });
 });
-wia.events.publish({
-    name: 'listofdevicesathome',
-    data: pirValue
-    });
+
 }
